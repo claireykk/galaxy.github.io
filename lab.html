@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>Local Storage</title>
+ <script type="text/javascript">
+    const localStorage = window.localStorage;
+
+    const initialize = () => {
+    if (localStorage) 
+    {
+    const count = localStorage.getItem("visitCount") || 0;
+    const newCount = parseInt(count) + 1;
+    localStorage.setItem("visitCount", newCount);
+    }
+ updateDOM();
+ };
+
+ const updateDOM = () => {
+ const count = localStorage.getItem("visitCount") || 0;
+ const storedPreferences = localStorage.getItem("preference");
+ const preference = storedPreferences
+ ? JSON.parse(storedPreferences)
+ : {};
+ document.getElementById(
+ "visitCount"
+ ).innerHTML = Visit count ${count};
+ document.body.style.background = preference.color || "white";
+ showAllStoredKeyValues();
+};
+
+ const setColorPreference = color => {
+    const localStorage = window.localStorage;
+    const preference = { color }
+    localStorage.setItem("preference", JSON.stringify(preference));
+    updateDOM();
+    };
+   
+    const removeCount = () => {
+    localStorage.removeItem("visitCount");
+    updateDOM();
+   };
+   
+   const clearAll = () => {
+    localStorage.clear();
+    updateDOM();
+   };
+   
+   const showAllStoredKeyValues = () => {
+    console.log(we have ${localStorage.length} values);
+    const ul = document.getElementById("storedItems");
+    ul.innerHTML = "";
+    for (let index = 0; index < localStorage.length; index++) {
+    const key = localStorage.key(index);
+    var li = document.createElement("li");
+    li.appendChild(
+    document.createTextNode(${key} = ${localStorage.getItem(key)})
+    );
+    ul.appendChild(li);
+    }
+    };
+
+    </script>
+
+    </head>
+   
+    <body onload="initialize()">
+       <style>
+           /* CSS for centering the content */
+           body {
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               height: 100vh;
+               margin: 0;
+           }
+   
+           div {
+               text-align: center;
+               margin-bottom: 20px; /* Adjust this for spacing between elements */
+           }
+           
+           table {
+               text-align: center;
+               margin-bottom: 20px;
+               margin-left: auto; 
+               margin-right: auto;
+           }
+           td {
+            border: 3px solid #020f11; /* Add a 1px solid black border to each table cell */
+            padding: 5px; /* Add some padding for spacing */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        button {
+            margin: 5px;
+            background-color: #a32c85; /* Set background color */
+            color: #fff; /* Set text color */
+            border: none; /* Remove default button border */
+            padding: 10px 20px; /* Add padding for button size */
+            border-radius: 5px; /* Add rounded corners */
+            cursor: pointer; /* Add pointer cursor on hover */
+            transition: background-color 0.3s, color 0.3s; /* Add smooth hover effect */
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Change background color on hover */
+        }
+        tr:hover {background-color: #D6EEEE;}
+    </style>
+    <div>
+    <img src="/INTRODUCTION TO PROGRAMMING/IMAGE/Beef.jpg" width=200 height=300>
+    
+<table>        
+  <tr> 
+    <td><b>Name</b></td>
+      <td>CLAIRE JEBICHI KIPLAGAT</td>
+  </tr>
+
+  <tr>
+    <td><b>Reg_Number</b></td>
+     <td>Sct221-0407/2021</td>
+  </tr>
+
+  <tr>
+    <td>
+        <b>Count</b>
+    </td>
+    <td>
+        <div id="visitCount"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <b>Preference</b>
+        </td>
+        <td>
+            <ul id="storedItems"></ul>
+        </td>
+      </tr>
+      
+  </table>
+  <div class="button-container">
+    <button type="button" onclick="setColorPreference('grey')">Grey</button>
+    <button type="button" onclick="setColorPreference('red')">Red</button>
+    <button type="button" onclick="setColorPreference('green')">Green</button>
+    <button type="button" onclick="setColorPreference('blue')">Blue</button>
+   <button type="button" onclick="removeCount()">Remove count</button>
+    <button type="button" onclick="clearAll()">Clear all</button>
+  </div>
+ 
+ 
+ </body>
+</html>
+   
